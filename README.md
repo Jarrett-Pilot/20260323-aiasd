@@ -1,119 +1,148 @@
 ---
 ai_generated: true
-model: "openai/gpt-5.3-codex@unknown"
+model: "openai/gpt-5.4@unknown"
 operator: "johnmillerATcodemag-com"
-chat_id: "retrofit-ai-provenance-20260323"
+chat_id: "create-c4-diagrams-20260324"
 prompt: |
-  retrofit the AI provenance in this project
-started: "2026-03-23T00:00:00Z"
-ended: "2026-03-23T00:30:00Z"
+  create c4 diagrams for this project using mermaid
+started: "2026-03-24T13:05:00-07:00"
+ended: "2026-03-24T13:22:00-07:00"
 task_durations:
-  - task: "provenance audit"
-    duration: "00:10:00"
-  - task: "metadata retrofit"
-    duration: "00:15:00"
-  - task: "log scaffolding"
+  - task: "repository inspection"
     duration: "00:05:00"
-total_duration: "00:30:00"
-ai_log: "ai-logs/2026/03/23/retrofit-ai-provenance-20260323/conversation.md"
+  - task: "diagram authoring"
+    duration: "00:10:00"
+  - task: "traceability updates"
+    duration: "00:02:00"
+total_duration: "00:17:00"
+ai_log: "ai-logs/2026/03/24/create-c4-diagrams-20260324/conversation.md"
 source: "github-copilot-chat"
 ---
 
 # 20260323-aiasd
 
-A basic WPF calculator UI built with C# and .NET 8.
+A .NET 8 WPF calculator application plus repository-specific AI workflow artifacts used to document, review, and compare the workspace against its instruction set.
 
-## Features
+## Current Repository State
+
+- Application: desktop calculator built with WPF on `net8.0-windows`
+- Solution layout: both `20260323-aiasd.sln` and `Calculator.csproj` live at the repo root
+- Source files: `App.xaml`, `App.xaml.cs`, `MainWindow.xaml`, `MainWindow.xaml.cs`
+- Governance files: `.github/instructions/` contains technology and repository workflow instructions
+- Prompt files: `.github/prompts/` contains reusable review and instruction-comparison prompts
+- Architecture docs: `docs/` contains Mermaid C4 diagrams for the current calculator design
+- Provenance logs: `ai-logs/` contains conversation and summary records for AI-assisted repository changes
+- Supporting materials: `slides/` contains presentation files and a text draft used during prompt authoring
+
+## Application Features
 
 - Basic arithmetic operations: addition, subtraction, multiplication, division
-- Percentage calculation
-- Trigonometric functions: `sin`, `cos`, `tan` (degrees)
-- Memory functionality: store, recall, add, subtract values
-- Error handling for invalid math operations (for example, divide by zero)
-- Desktop UI with display, number pad, operator keys, memory keys, and trig keys
+- Percentage calculation as a percent-of operation
+- Trigonometric functions: `sin`, `cos`, and `tan` using degree input
+- Memory controls: `MC`, `MR`, `M+`, `M-`
+- Clear entry (`CE`) and clear all (`CA`)
+- Read-only display with status text for current operation and error feedback
+- Validation for invalid input, division by zero, and undefined tangent angles
+
+## Technology Stack
+
+- .NET SDK-style project
+- Target framework: `net8.0-windows`
+- UI framework: WPF
+- Language: C# with nullable reference types enabled
+
+## Repository Layout
+
+- `20260323-aiasd.sln`: solution entry point
+- `Calculator.csproj`: WPF project configuration
+- `App.xaml` and `App.xaml.cs`: application bootstrap
+- `MainWindow.xaml` and `MainWindow.xaml.cs`: calculator UI and event-driven behavior
+- `.github/instructions/`: repository, platform, and authoring instructions
+- `.github/prompts/`: reusable prompt files for repository review tasks
+- `docs/`: architecture documentation, including Mermaid C4 diagrams
+- `ai-logs/`: AI provenance conversation logs and summaries
+- `slides/`: supporting slide decks and draft prompt content
 
 ## Prerequisites
 
-- .NET 8 SDK or later installed
+- .NET 8 SDK or later
+- Windows with WPF support
 
-## Getting Started
+## Build And Run
 
-1. Clone the repository.
-2. Navigate to the project directory:
-   ```bash
-   cd 20260323-aiasd
-   ```
-3. Run the calculator:
-   ```bash
-   dotnet run
-   ```
+Use an explicit target when building from the repository root because the root contains both a solution file and a project file.
+
+Build the solution:
+
+```bash
+dotnet build .\20260323-aiasd.sln
+```
+
+Build the project directly:
+
+```bash
+dotnet build .\Calculator.csproj
+```
+
+Run the application:
+
+```bash
+dotnet run --project .\Calculator.csproj
+```
+
+## Development Notes
+
+- A build can fail if `Calculator.exe` is already running because the output executable is locked by the running process.
+- A plain `dotnet build` from the repo root is ambiguous because both the solution and project files are present.
+- The repository includes prompt and instruction artifacts in addition to the application code, so README coverage extends beyond the calculator UI itself.
 
 ## Usage
 
-1. Launch the app with `dotnet run`.
-2. Use the number pad and operator buttons to perform calculations.
-3. Use `sin`, `cos`, and `tan` buttons for trigonometric operations on the displayed value.
-4. Use `MC`, `MR`, `M+`, and `M-` for memory operations.
-5. Use `CE` for clear entry and `CA` for clear all.
-
-### Trigonometric Examples
-
-- `sin(30)` = 0.5
-- `cos(60)` = 0.5
-- `tan(45)` = 1
-
-### Percentage Examples
-
-- `100 % 20` = 20 (20% of 100)
-- `50 % 30` = 15 (30% of 50)
-- `200 % 5` = 10 (5% of 200)
-
-### Memory Controls
-
-- **MC** — Clear memory
-- **MR** — Recall memory to display
-- **M+** — Add displayed value to memory
-- **M-** — Subtract displayed value from memory
-
-## Project Structure
-
-- `Calculator.csproj`: .NET 8 project file
-- `MainWindow.xaml`: WPF UI layout
-- `MainWindow.xaml.cs`: UI interaction and calculator behavior
-- `App.xaml` / `App.xaml.cs`: WPF app bootstrap
-- `README.md`: Project overview and setup notes
+1. Launch the app with `dotnet run --project .\Calculator.csproj`.
+2. Enter numbers with the on-screen keypad.
+3. Choose an operator, then enter the second operand and press `=`.
+4. Use `sin`, `cos`, or `tan` to evaluate the displayed value in degrees.
+5. Use `MC`, `MR`, `M+`, and `M-` for memory operations.
+6. Use `CE` to reset the current entry or `CA` to reset the whole calculation state.
 
 ## AI-Assisted Artifacts
 
-- [README.md](README.md): Project documentation with embedded provenance metadata. Log: [conversation.md](ai-logs/2026/03/23/retrofit-ai-provenance-20260323/conversation.md)
+- [README.md](README.md): Repository overview, current-state documentation, and architecture artifact index. Log: [conversation.md](ai-logs/2026/03/24/create-c4-diagrams-20260324/conversation.md)
+- [docs/c4-diagrams.md](docs/c4-diagrams.md): Mermaid C4 system context, container, component, and dynamic diagrams for the calculator application. Log: [conversation.md](ai-logs/2026/03/24/create-c4-diagrams-20260324/conversation.md)
+- [.github/instructions/ai-assisted-output.instructions.md](.github/instructions/ai-assisted-output.instructions.md): Provenance and AI logging policy for repository artifacts. Log: [conversation.md](ai-logs/2026/01/20/generate-ai-output-policy-20260120/conversation.md)
 - [.github/instructions/evergreen-software-development.instructions.md](.github/instructions/evergreen-software-development.instructions.md): Core principles for evergreen software development. Log: [conversation.md](ai-logs/2026/03/23/create-evergreen-instructions-20260323/conversation.md)
 - [.github/instructions/dotnet.instructions.md](.github/instructions/dotnet.instructions.md): .NET 8 project and build guidance for this WPF app. Log: [conversation.md](ai-logs/2026/03/23/create-technology-instructions-20260323/conversation.md)
 - [.github/instructions/csharp.instructions.md](.github/instructions/csharp.instructions.md): C# guidance for calculator logic and event handlers. Log: [conversation.md](ai-logs/2026/03/23/create-technology-instructions-20260323/conversation.md)
 - [.github/instructions/wpf.instructions.md](.github/instructions/wpf.instructions.md): WPF guidance for code-behind and window behavior. Log: [conversation.md](ai-logs/2026/03/23/create-technology-instructions-20260323/conversation.md)
 - [.github/instructions/xaml.instructions.md](.github/instructions/xaml.instructions.md): XAML guidance for calculator layout and control wiring. Log: [conversation.md](ai-logs/2026/03/23/create-technology-instructions-20260323/conversation.md)
 - [.github/prompts/meta/create-technology-instructions.instructions.prompt.md](.github/prompts/meta/create-technology-instructions.instructions.prompt.md): Promptfile that inspects the repo and creates or updates technology-specific instruction files. Log: [conversation.md](ai-logs/2026/03/23/create-technology-instructions-prompt-20260323/conversation.md)
-- [Calculator.csproj](Calculator.csproj): WPF project configuration with embedded provenance metadata.
-- [App.xaml](App.xaml): WPF application declaration with embedded provenance metadata.
-- [App.xaml.cs](App.xaml.cs): WPF application bootstrap class with embedded provenance metadata.
-- [MainWindow.xaml](MainWindow.xaml): Calculator UI layout with embedded provenance metadata.
-- [MainWindow.xaml.cs](MainWindow.xaml.cs): Calculator logic and event handlers with embedded provenance metadata.
-- [conversation.md](ai-logs/2026/03/23/retrofit-ai-provenance-20260323/conversation.md): AI chat transcript.
-- [summary.md](ai-logs/2026/03/23/retrofit-ai-provenance-20260323/summary.md): AI session resumability summary.
+- [.github/prompts/compare-workspace-to-instructions.prompt.md](.github/prompts/compare-workspace-to-instructions.prompt.md): Promptfile that compares the workspace against the repository instruction files and can be scoped to a folder. Log: [conversation.md](ai-logs/2026/03/24/add-folder-parameter-to-compare-workspace-prompt-20260324/conversation.md)
+- [.github/prompts/review-evergreen-code.prompt.md](.github/prompts/review-evergreen-code.prompt.md): Promptfile that reviews the repository against evergreen software principles. Log: [conversation.md](ai-logs/2026/03/24/create-evergreen-review-prompt-20260324/conversation.md)
+- [conversation.md](ai-logs/2026/03/24/create-c4-diagrams-20260324/conversation.md): AI chat transcript for the Mermaid C4 diagram creation task.
+- [summary.md](ai-logs/2026/03/24/create-c4-diagrams-20260324/summary.md): AI session resumability summary for the Mermaid C4 diagram creation task.
+- [conversation.md](ai-logs/2026/03/24/update-readme-current-state-20260324/conversation.md): AI chat transcript for the README current-state update.
+- [summary.md](ai-logs/2026/03/24/update-readme-current-state-20260324/summary.md): AI session resumability summary for the README current-state update.
+
+## Existing AI Logs
+
+- [conversation.md](ai-logs/2026/03/23/retrofit-ai-provenance-20260323/conversation.md): AI chat transcript for the provenance retrofit.
+- [summary.md](ai-logs/2026/03/23/retrofit-ai-provenance-20260323/summary.md): AI session resumability summary for the provenance retrofit.
 - [conversation.md](ai-logs/2026/03/23/create-evergreen-instructions-20260323/conversation.md): AI chat transcript for evergreen instruction creation.
 - [summary.md](ai-logs/2026/03/23/create-evergreen-instructions-20260323/summary.md): AI session resumability summary for evergreen instruction creation.
 - [conversation.md](ai-logs/2026/03/23/create-technology-instructions-20260323/conversation.md): AI chat transcript for technology instruction creation.
 - [summary.md](ai-logs/2026/03/23/create-technology-instructions-20260323/summary.md): AI session resumability summary for technology instruction creation.
 - [conversation.md](ai-logs/2026/03/23/create-technology-instructions-prompt-20260323/conversation.md): AI chat transcript for technology instruction prompt creation.
 - [summary.md](ai-logs/2026/03/23/create-technology-instructions-prompt-20260323/summary.md): AI session resumability summary for technology instruction prompt creation.
-
-## Building the Project
-
-```bash
-dotnet build
-```
+- [conversation.md](ai-logs/2026/03/24/create-compare-workspace-to-instructions-prompt-20260324/conversation.md): AI chat transcript for instruction comparison prompt creation.
+- [summary.md](ai-logs/2026/03/24/create-compare-workspace-to-instructions-prompt-20260324/summary.md): AI session resumability summary for instruction comparison prompt creation.
+- [conversation.md](ai-logs/2026/03/24/add-folder-parameter-to-compare-workspace-prompt-20260324/conversation.md): AI chat transcript for adding folder scoping to the instruction comparison prompt.
+- [summary.md](ai-logs/2026/03/24/add-folder-parameter-to-compare-workspace-prompt-20260324/summary.md): AI session resumability summary for the folder-scoped prompt update.
+- [conversation.md](ai-logs/2026/03/24/create-evergreen-review-prompt-20260324/conversation.md): AI chat transcript for evergreen review prompt creation.
+- [summary.md](ai-logs/2026/03/24/create-evergreen-review-prompt-20260324/summary.md): AI session resumability summary for evergreen review prompt creation.
 
 ## Contributing
 
-1. Create a feature branch.
-2. Make your changes.
-3. Open a pull request.
+1. Keep documentation aligned with the actual repository structure and commands.
+2. Use explicit solution or project paths for build and run commands from the repo root.
+3. Update provenance metadata and `ai-logs/` when creating or modifying AI-assisted artifacts.
+4. Open a pull request with the relevant code, documentation, and traceability updates.
